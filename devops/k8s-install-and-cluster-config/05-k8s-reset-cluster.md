@@ -1,4 +1,4 @@
-## reset cluster
+### RESET CLUSTER
 
 
 ```bash
@@ -33,17 +33,5 @@ sudo iptables -F && sudo iptables -t nat -F && sudo iptables -t mangle -F && sud
 sudo rm -f $HOME/.kube/config
 ```
 
-sudo systemctl disable docker.socket containerd kubelet cri-docker cri-docker.socket
 
-
-
-# STOPING CLUSTER
-sudo systemctl stop kubelet cri-docker cri-docker.socket
-docker stop $(docker ps -qa)
-sudo systemctl stop docker docker.socket containerd 
-
-# STARTING CLUSTER
-sudo systemctl start docker docker.socket containerd 
-sudo systemctl start cri-docker cri-docker.socket
-sudo systemctl start kubelet
 

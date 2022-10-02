@@ -1,4 +1,5 @@
-# kubeadm kubelet kubectl install
+### kubeadm kubelet kubectl install
+
 
 ```bash
 
@@ -18,7 +19,7 @@ EOF
 sudo sysctl --system
 
 
-# instalando kubeadm, kubelet e kubectl 
+# Instalando kubeadm, kubelet e kubectl 
 
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
@@ -34,17 +35,33 @@ exit
 ```
 
 
-# alias para o cluster
+### Configurar alias para cluster
+
+
+```bash
 
 sudo nano /etc/hosts
 
+# <IP-CLUSTER> <NOME-DO-CLUSTER>
 192.168.0.131/24 master-node-k8s
 
+```
 
-# liberar portas no firewall
+
+### Liberar portas no firewall
+
+
+```bash
 
 TCP	Inbound	6443	Kubernetes API server	All
+
 TCP	Inbound	2379-2380	etcd server client API	kube-apiserver, etcd
+
 TCP	Inbound	10250	Kubelet API	Self, Control plane
+
 TCP	Inbound	10259	kube-scheduler	Self
+
 TCP	Inbound	10257	kube-controller-manager	Self
+
+```
+

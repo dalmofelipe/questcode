@@ -1,44 +1,7 @@
-# CONFIGURANDO CLUSTER
+## CONFIGURANDO CLUSTER
 
 
-
-## INSTALL MIRANTIS CRI-DOCKERD
-
-```bash
-
-sudo su 
-
-wget https://storage.googleapis.com/golang/getgo/installer_linux
-chmod +x ./installer_linux
-./installer_linux
-source ~/.bash_profile
-
-git clone https://github.com/Mirantis/cri-dockerd.git
-
-cd cri-dockerd
-
-mkdir bin
-
-go build -o bin/cri-dockerd
-
-mkdir -p /usr/local/bin
-
-install -o root -g root -m 0755 bin/cri-dockerd /usr/local/bin/cri-dockerd
-
-cp -a packaging/systemd/* /etc/systemd/system
-
-sed -i -e 's,/usr/bin/cri-dockerd,/usr/local/bin/cri-dockerd,' /etc/systemd/system/cri-docker.service
-
-systemctl daemon-reload
-systemctl enable cri-docker.service
-systemctl enable --now cri-docker.socket
-
-systemctl status cri-docker.service
-
-```
-
-
-## INIT CLUSTER
+### INICIALIZANDO CLUSTER
 
 ```bash
 
@@ -65,7 +28,8 @@ kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///var/run/cri-d
 ```
 
 
-## CONFIGURANDO CLIENT (KUBECTL)
+### CONFIGURANDO CLIENT (KUBECTL)
+
 
 ```bash
 mkdir -p $HOME/.kube
@@ -74,7 +38,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
 
-## INSTALANDO POD NETWORK ADD-ON (FLANEL) E MASTER ISOLATION
+### INSTALANDO POD NETWORK ADD-ON (FLANEL)
+
 
 ```bash
 # POD para gerenciamentos de rede interna do k8s
@@ -84,6 +49,9 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Docume
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 
 ```
+
+
+### MASTER ISOLATION
 
 
 ```bash
