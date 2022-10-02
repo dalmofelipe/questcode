@@ -1,0 +1,15 @@
+.vscode/
+
+node_modules/
+
+**/oci/*.tgz
+
+docker-compose.yaml
+
+.env
+
+keys-dev.js
+
+02-2-secrets.yaml
+
+02-1-config-map.yaml
