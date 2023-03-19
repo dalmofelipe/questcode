@@ -3,6 +3,18 @@
 
 https://kubernetes.io/docs/tasks/administer-cluster/migrating-from-dockershim/migrate-dockershim-dockerd/
 
+### Update Golang
+
+[https://go.dev/doc/install](https://go.dev/doc/install)
+
+```
+cd Downloads
+
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.2.linux-amd64.tar.gz
+
+```
+
+### Compilando cri-dockerd
 
 ```bash
 

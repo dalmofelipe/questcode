@@ -8,7 +8,7 @@ sleep 1
 
 echo "parando containers K8S"
 echo "Obs.: Todos os containers serão parados!"
-docker stop $(docker ps -qa)
+docker stop $(docker ps -q)
 sleep 3
 
 echo "parando docker service, docker socket e containerd"

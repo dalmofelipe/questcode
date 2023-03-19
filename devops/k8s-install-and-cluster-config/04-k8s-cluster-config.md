@@ -51,14 +51,11 @@ kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Doc
 ```
 
 
-### MASTER ISOLATION
+### CONTROL-PLANE ISOLATION
 
+Permite que o master/control-plane rode como um node!
 
 ```bash
 # libera o master para agir como worker
-kubectl taint nodes --all node-role.kubernetes.io/master-
-
-# Note: The node-role.kubernetes.io/master taint is deprecated and kubeadm will stop using it in version 1.25. 
-# https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
-kubectl taint nodes --all node-role.kubernetes.io/control-plane- node-role.kubernetes.io/master-
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```

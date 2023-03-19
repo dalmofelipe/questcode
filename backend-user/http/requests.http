@@ -1,0 +1,10 @@
+###
+GET http://localhost:3020/api/profile/test HTTP/1.1
+
+
+###
+GET http://questcode.org:30020/api/profile/all HTTP/1.1
+
+
+###
+GET http://questcode.org:30020/api/profile/test HTTP/1.1

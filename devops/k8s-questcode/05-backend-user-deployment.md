@@ -20,10 +20,10 @@ Error: querySrv ESERVFAIL _mongodb._tcp.devops-udemy.szvvz.mongodb.net
 # CONFIGURAR DOCKER PARA LIBERAR ACESSO AO "MUNDO EXTERIOR"
 
 ```bash
-#Configure the Linux kernel to allow IP forwarding.
+# Configure the Linux kernel to allow IP forwarding.
 sysctl net.ipv4.conf.all.forwarding=1
 
-#Change the policy for the iptables FORWARD policy from DROP to ACCEPT.
+# Change the policy for the iptables FORWARD policy from DROP to ACCEPT.
 sudo iptables -P FORWARD ACCEPT
 ```
 

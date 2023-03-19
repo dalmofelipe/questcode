@@ -16,6 +16,7 @@ cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
+
 sudo sysctl --system
 
 
@@ -40,10 +41,13 @@ exit
 
 ```bash
 
+# verificar ip do host local
+ip address
+
 sudo nano /etc/hosts
 
-# <IP-CLUSTER> <NOME-DO-CLUSTER>
-192.168.0.131/24 master-node-k8s
+# <IP-CLUSTER>  <HOSTNAME>
+192.168.0.231   ryzen.k8s.cluster
 
 ```
 
@@ -53,15 +57,14 @@ sudo nano /etc/hosts
 
 ```bash
 
-TCP	Inbound	6443	Kubernetes API server	All
+TCP	Inbound	6443	    Kubernetes API server	All
 
 TCP	Inbound	2379-2380	etcd server client API	kube-apiserver, etcd
 
-TCP	Inbound	10250	Kubelet API	Self, Control plane
+TCP	Inbound	10250	    Kubelet API	Self, Control plane
 
-TCP	Inbound	10259	kube-scheduler	Self
+TCP	Inbound	10259	    kube-scheduler	Self
 
-TCP	Inbound	10257	kube-controller-manager	Self
+TCP	Inbound	10257	    kube-controller-manager	Self
 
 ```
-

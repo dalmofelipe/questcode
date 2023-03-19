@@ -1,5 +1,5 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const {mongoose, ServerApiVersion} = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const cors = require('cors');
@@ -39,7 +39,8 @@ const db = require("./config/keys").mongoURI.trim();
 mongoose
   .connect(db, { 
     useNewUrlParser: true,
-    useUnifiedTopology: true 
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1 
   })
   .then(() => console.log("Mongo DB Connected."))
   .catch(err => console.log(err));
@@ -54,4 +55,4 @@ app.use("/api/post", post);
 
 const port = process.env.PORT || 3020;
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`BACKEND-USER running on http://localhost:${port}`));

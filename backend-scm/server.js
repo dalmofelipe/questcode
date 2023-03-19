@@ -14,4 +14,4 @@ app.get(`${apiPrefix}/health`, (req, res) => res.json({ msg: "Health OK" }));
 
 const port = process.env.PORT || 3030;
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`SCM Server running on http://localhost:${port}`));

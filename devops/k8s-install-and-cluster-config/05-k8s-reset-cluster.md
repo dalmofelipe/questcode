@@ -32,6 +32,3 @@ sudo iptables -F && sudo iptables -t nat -F && sudo iptables -t mangle -F && sud
 ```bash
 sudo rm -f $HOME/.kube/config
 ```
-
-
-
