@@ -49,6 +49,9 @@ echo http://$NODE_IP:$NODE_PORT/
 
 # add helm-repo do k8s-chartmuseum
 helm repo add questcode http://$(kubectl get nodes --namespace devops -o jsonpath="{.items[0].status.addresses[0].address}"):30010
+ou
+helm repo add questcode http://<IP-HOST-CLUSTER>:30010
+helm repo add questcode http://192.168.0.231:30010
 
 # install plugin helm-push
 helm plugin install https://github.com/chartmuseum/helm-push
@@ -68,11 +71,11 @@ helm cm-push oci/backend-user-0.1.0.tgz http://localhost:30010
 helm repo update
 ```
 
-    `Port` exposes the Kubernetes service on the specified port within the cluster. Other pods within the cluster can communicate with this server on the specified port.
+`Port` exposes the Kubernetes service on the specified port within the cluster. Other pods within the cluster can communicate with this server on the specified port.
 
-    `TargetPort` is the port on which the service will send requests to, that your pod will be listening on. Your application in the container will need to be listening on this port also.
+`TargetPort` is the port on which the service will send requests to, that your pod will be listening on. Your application in the container will need to be listening on this port also.
 
-    `NodePort` exposes a service externally to the cluster by means of the target nodes IP address and the NodePort. NodePort is the default setting if the port field is not specified.
+`NodePort` exposes a service externally to the cluster by means of the target nodes IP address and the NodePort. NodePort is the default setting if the port field is not specified.
 
 
 
@@ -81,13 +84,13 @@ helm repo update
 Upgrade simulando nova versão do ```backend-scm```
 
 ```sh
-# limpando todos charts instalados via arquivos
-helm delete backend-scm backend-user frontend --namespace=staging
-
-# re instalando via repository chartmuseum
+# instalando via repository chartmuseum
 helm install frontend questcode/frontend --namespace=staging
 helm install backend-scm questcode/backend-scm --namespace=staging
 helm install backend-user questcode/backend-user --namespace=staging
+
+# limpando todos charts instalados via arquivos
+helm delete backend-scm backend-user frontend --namespace=staging
 
 # novo deply de nova versão do app entregue pela equipe de dev
 helm upgrade backend-scm questcode/backend-scm --set image.tag=0.1.1 --namespace=staging

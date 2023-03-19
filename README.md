@@ -238,6 +238,55 @@ Feito, Chartmuseum hospedado no Cluster!
 
 ### Subir Helm Charts QuestCode para registry do Chatmuseum no cluster
 
-```bash
+#### ADD REPO HELM CHART 
 
+```bash
+# Adiciona repositorio de charts do Questcode no Helm Host local
+helm repo add questcode http://$(kubectl get nodes --namespace devops -o jsonpath="{.items[0].status.addresses[0].address}"):30010
+
+# Instalar o plug in CMPUSH necessário para o upload dos charts do questcode para o cluster
+helm plugin install https://github.com/chartmuseum/helm-push
+```
+
+#### UPLOAD HELM CHART QUESTCODE
+
+```bash
+helm lint charts/frontend/
+helm package charts/frontend/ -d oci/
+helm cm-push oci/frontend-0.1.0.tgz http://localhost:30010
+
+helm lint charts/backend-scm/
+helm package charts/backend-scm/ -d oci/
+helm cm-push oci/backend-scm-0.1.0.tgz http://localhost:30010
+
+helm lint charts/backend-user/
+helm package charts/backend-user/ -d oci/
+helm cm-push oci/backend-user-0.1.0.tgz http://localhost:30010
+
+helm repo update
+```
+
+#### RUNING AND HELM UPGRADE
+
+Upgrade simulando nova versão do ```backend-scm```
+
+```sh
+# instalando microservicos do questcode via repository chartmuseum
+helm install frontend questcode/frontend --namespace=staging
+helm install backend-scm questcode/backend-scm --namespace=staging
+helm install backend-user questcode/backend-user --namespace=staging
+
+# limpando todos charts instalados via arquivos
+helm delete backend-scm backend-user frontend --namespace=staging
+
+# novo deply de nova versão do app entregue pela equipe de dev
+helm upgrade backend-scm questcode/backend-scm --set image.tag=0.1.1 --namespace=staging
+
+# checar os status e historico de um chart
+helm status backend-scm -n staging
+helm history backend-scm -n staging
+
+# ihh deu ruim, rollback para versão anterior
+helm rollback <RELEASE> <REVISION>
+helm rollback backend-scm 1 -n staging
 ```
