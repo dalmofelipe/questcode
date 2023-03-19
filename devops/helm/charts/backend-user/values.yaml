@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: dalmofelipe/qc-backend-user-alpine
+  repository: dalmofelipe/questcode-backend-user
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.1.0"
+  tag: "1.0.0"
 
 imagePullSecrets: []
 nameOverride: ""

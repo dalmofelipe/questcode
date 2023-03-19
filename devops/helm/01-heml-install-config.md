@@ -1,6 +1,6 @@
 # HELM
 
-### INSTALL 
+### INSTALL HOST
 
 ```bash
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -9,7 +9,7 @@ $ ./get_helm.sh
 ```
 
 
-### INICIAR HELM NO CLUSTER
+### [DESATUALIZADO] INICIAR HELM NO CLUSTER
 
 ```bash
 $ helm init

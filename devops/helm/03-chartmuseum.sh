@@ -2,7 +2,7 @@
 
 # 03-chartmuseum.sh
 
-# helm install helm --namespace=devops -f 03-chartmuseum-config.yaml chartmuseum/chartmuseum
+helm install helm --namespace=devops -f 03-chartmuseum-config.yaml chartmuseum/chartmuseum
 
 helm repo add questcode http://$(kubectl get nodes --namespace devops -o jsonpath="{.items[0].status.addresses[0].address}"):30010
 
