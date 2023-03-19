@@ -1,6 +1,7 @@
 
 ## DevOps BootCamp - QuestCode ~~2021~~ ~~2022~~ 2023
 
+![Bootcamp DevOps](/docs/cover.png "Bootcamp DevOps")
 
 ## RoadMap
 
