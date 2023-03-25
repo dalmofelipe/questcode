@@ -1,5 +1,6 @@
 ### RESET CLUSTER
 
+Use somente quando necessário!
 
 ```bash
 sudo kubeadm reset cleanup-node

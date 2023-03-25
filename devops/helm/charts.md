@@ -9,12 +9,12 @@ https://github.com/helm/chartmuseum
 helm repo add chartmuseum https://chartmuseum.github.io/charts
 # helm install my-chartmuseum chartmuseum/chartmuseum --version 3.7.1
 # helm install --name helm --namespace devops -f 02-chartmuseum-conf.yaml stable/chartmuseum
-helm install k8s-chartmuseum --namespace=devops -f 03-chartmuseum-config.yaml chartmuseum/chartmuseum
+helm install k8s-chartmuseum --namespace=devops -f chartmuseum-config.yaml chartmuseum/chartmuseum
 ```
 
 
 ```yaml
-# 03-chartmuseum-conf.yaml
+# chartmuseum-conf.yaml
 env:
   open:
     STORAGE: local
@@ -43,15 +43,15 @@ echo http://$NODE_IP:$NODE_PORT/
 ```sh
 #!/bin/bash
 
-# 03-chartmuseum.sh
+# chartmuseum.sh
 
-# helm install helm --namespace=devops -f 03-chartmuseum-config.yaml chartmuseum/chartmuseum
+# helm install helm --namespace=devops -f chartmuseum-config.yaml chartmuseum/chartmuseum
 
 # add helm-repo do k8s-chartmuseum
 helm repo add questcode http://$(kubectl get nodes --namespace devops -o jsonpath="{.items[0].status.addresses[0].address}"):30010
 ou
 helm repo add questcode http://<IP-HOST-CLUSTER>:30010
-helm repo add questcode http://192.168.0.231:30010
+
 
 # install plugin helm-push
 helm plugin install https://github.com/chartmuseum/helm-push
@@ -106,12 +106,7 @@ helm rollback backend-scm 1 -n staging
 
 
 
-
-
-
-
-
-### FRONTEND CHART BASIC
+### EXEMPLO CRIANDO UM HELM CHART DO FRONTEND
 
 pasta-nome-chart
 
@@ -125,6 +120,12 @@ values.yaml
 ```bash
 helm create <nome-chart>
 ```
+
+**WIP!**
+
+
+
+### COMANDOS HELM
 
 ```bash
 helm ls
@@ -148,11 +149,6 @@ helm install <nome-chart> --namespace=default .
 '--set namespace=default' cria um key=value em 'values.yaml' do namespace onde o helm deve subir o chart no K8s
 
 '.' o ponto indica o diretório atual
-
-
-```bash
-helm ls
-```
 
 ```bash
 helm upgrade --install

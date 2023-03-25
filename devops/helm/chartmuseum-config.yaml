@@ -1,7 +1,7 @@
-# 03-chartmuseum-config.yaml
+# chartmuseum-config.yaml
 # helm repo add chartmuseum https://chartmuseum.github.io/charts
 # helm install my-chartmuseum chartmuseum/chartmuseum --version 3.7.1
-# helm install helm-chartmuseum --namespace=devops -f 03-chartmuseum-config.yaml chartmuseum/chartmuseum
+# helm install helm-chartmuseum --namespace=devops -f chartmuseum-config.yaml chartmuseum/chartmuseum
 env:
   open:
     STORAGE: local
