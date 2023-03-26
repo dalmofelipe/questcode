@@ -32,16 +32,6 @@ const config =
       ? staging
       : dev;
 
-/*
-let config;
-if (process.env.REACT_APP_STAGE === "production") {
-  config = prod;
-} else if (process.env.REACT_APP_STAGE === "staging") {
-  config = staging;
-} else {
-  config = dev;
-}
-*/
 
 export default {
   // Add common config values here

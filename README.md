@@ -47,21 +47,21 @@ sudo usermod -aG docker $USER
 ### Remover todas configurações de clusters anteriores
 
 ```bash
-sudo systemctl stop cri-docker.service cri-docker.socket kubelet.service
+systemctl stop cri-docker.service cri-docker.socket kubelet.service
 
-sudo kubeadm reset cleanup-node
+kubeadm reset cleanup-node
 
-sudo rm -rf /var/lib/etcd  \
-&& sudo rm -rf /var/lib/kubelet  \
-&& sudo rm -rf /var/lib/dockershim  \
-&& sudo rm -rf /var/run/kubernetes  \
-&& sudo rm -rf /var/lib/cni \
-&& sudo rm -f /etc/cni/net.d/10-flannel.conflist \
-&& sudo rm -f /opt/cni/bin/flannel \
-&& sudo rm -rf /etc/cni/net.d \
-&& sudo rm -f $HOME/.kube
+rm -rf /var/lib/etcd  \
+&& rm -rf /var/lib/kubelet  \
+&& rm -rf /var/lib/dockershim  \
+&& rm -rf /var/run/kubernetes  \
+&& rm -rf /var/lib/cni \
+&& rm -f /etc/cni/net.d/10-flannel.conflist \
+&& rm -f /opt/cni/bin/flannel \
+&& rm -rf /etc/cni/net.d \
+&& rm -f $HOME/.kube
 
-sudo iptables -F && sudo iptables -t nat -F && sudo iptables -t mangle -F && sudo iptables -X
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 ```
 
 

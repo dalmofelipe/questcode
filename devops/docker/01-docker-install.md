@@ -30,6 +30,19 @@ sudo usermod -aG docker $USER
 ```
 
 
+### LIBERANDO CONTAINERS PARA ACESSO A INTERNET
+
+```
+# Criar arquivo em
+/etc/docker/daemon.json
+
+# daemon.json
+{
+  "dns": ["10.0.0.2", "8.8.8.8"]
+}
+```
+
+
 ### THROUBLESHOOTING
 
 ```bash
