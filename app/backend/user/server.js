@@ -1,5 +1,5 @@
 const express = require("express");
-const {mongoose, ServerApiVersion} = require("mongoose");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const cors = require('cors');
@@ -35,15 +35,15 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Database Configuration and Connection
-const db = require("./config/keys").mongoURI.trim();
-mongoose
-  .connect(db, { 
+const uri = require("./config/keys").mongoURI.trim();
+
+mongoose.connect(uri, { 
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    serverApi: ServerApiVersion.v1 
+    serverApi: '1'
   })
   .then(() => console.log("Mongo DB Connected."))
-  .catch(err => console.log(err));
+  .catch(err => console.log(err.reason));
 
 // Passport Middleware
 app.use(passport.initialize());

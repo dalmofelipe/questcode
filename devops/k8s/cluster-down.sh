@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Verificando o UID do usuário que executou o script
+if [ $UID -ne 0 ]; then
+    # Se for diferente de 0, imprime mensagem de erro.
+    echo "Requer privilégio de root."
+
+    # Finaliza o script
+    exit 1
+fi
+
 echo "STOP K8s CLUSTER!"
 
 echo "parando kubelet, cri-docker e cri-docker socket"

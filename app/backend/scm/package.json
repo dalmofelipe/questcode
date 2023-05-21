@@ -1,6 +1,6 @@
 {
     "name": "questcode-backend-scm",
-    "version": "0.1.2",
+    "version": "0.1.0",
     "description": "SCM Backends",
     "main": "server.js",
     "scripts": {

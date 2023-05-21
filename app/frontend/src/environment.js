@@ -18,7 +18,7 @@ const staging = {
 };
 
 const prod = {
-  NAME: "Production",
+  NAME: "Production Mode",
   API_URL: "http://questcode.org",
   s3: {
     BUCKET: "YOUR_PROD_S3_UPLOADS_BUCKET_NAME"

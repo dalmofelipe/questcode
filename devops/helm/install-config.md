@@ -9,7 +9,7 @@ $ ./get_helm.sh
 ```
 
 
-### [DESATUALIZADO] INICIAR HELM NO CLUSTER
+### INICIAR HELM NO CLUSTER [DESCONTINUADO] 
 
 ```bash
 $ helm init
