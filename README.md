@@ -177,6 +177,37 @@ metadata:
 
 ```
 
+
+### DOCKER BUILD IMAGES e upload para o registry no DockerHUB
+
+**FRONTEND**
+
+```bash
+docker build -t --name frontend-alpine-staging dalmofelipe/questcode-frontend:0.1.0-staging --build-arg NPM_ENV=staging .
+docker push dalmofelipe/dalmofelipe/questcode-frontend:0.1.0-staging
+```
+
+Caso o container não tenha acesso a internet para baixar as dependências pelo npm, use a flag *--network host*
+
+```bash
+docker build -t --name frontend-alpine-staging dalmofelipe/questcode-frontend:0.1.0-staging --build-arg NPM_ENV=staging --network host .
+```
+
+**SCM**
+
+```bash
+docker build -t dalmofelipe/questcode-backend-scm:0.1.0-staging .
+docker push dalmofelipe/questcode-backend-scm:0.1.0-staging 
+```
+
+**USER**
+
+```bash
+docker build -t dalmofelipe/questcode-backend-user:0.1.0-staging .
+docker push dalmofelipe/questcode-backend-user:0.1.0-staging 
+```
+
+
 ### Instalar Helm no Host
 
 ```bash
@@ -232,9 +263,10 @@ export NODE_IP=$(kubectl get nodes --namespace devops -o jsonpath="{.items[0].st
 echo http://$NODE_IP:$NODE_PORT/
 ```
 
-Acesse: http://192.168.0.231:30010/
+Acesse: http://<IP-COMPUTADOR-HOST>:30010/
 
 Feito, Chartmuseum hospedado no Cluster!
+
 
 
 ### Subir Helm Charts QuestCode para registry do Chatmuseum no cluster

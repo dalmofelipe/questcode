@@ -54,7 +54,7 @@ EXPOSE 80
 docker build -t --name frontend-alpine-staging dalmofelipe/qc-frontend-alpine:0.1.1-staging --build-arg NPM_ENV=staging .
 ```
 
-Caso o container não tenha acesso a internet, use a flag *--network host*
+Caso o container não tenha acesso a internet para baixar as dependências pelo npm, use a flag *--network host*
 
 ```bash
 docker build -t --name frontend-alpine-staging dalmofelipe/qc-frontend-alpine:0.1.1-staging --build-arg NPM_ENV=staging --network host .
