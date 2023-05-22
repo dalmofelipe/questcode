@@ -1,9 +1,11 @@
 image:
-  tag: 0.1.2-staging
+  name: dalmofelipe/questcode-frontend
+  tag: 0.1.0-staging
 
 replicas: 2
 
-service:
+container:
   port: 80
-  nodePort: 31888
 
+service:
+  nodePort: 31080
