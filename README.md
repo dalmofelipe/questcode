@@ -1,5 +1,5 @@
 
-## DevOps BootCamp - QuestCode ~~2021~~ ~~2022~~ 2023
+## DevOps BootCamp - QuestCode
 
 ![Bootcamp DevOps](/docs/cover.png "Bootcamp DevOps")
 
@@ -208,7 +208,7 @@ docker push dalmofelipe/questcode-backend-user:0.1.0-staging
 ```
 
 
-### Instalar Helm no Host
+### Instalar Helm no computador local/HOST
 
 ```bash
 # helm install , caso já tenha o Helm instalado ele será atualizado
@@ -269,13 +269,65 @@ Feito, Chartmuseum hospedado no Cluster!
 
 
 
-### Subir Helm Charts QuestCode para registry do Chatmuseum no cluster
+### CRIANDO HELM CHARTS - TRANSFORMANDO IMAGENS DOCKER EM CHARTS 
+
+Comando gera um template completo de Helm Chart.
+
+```bash
+# ./devops/helm/charts/questcode
+cd ./devops/helm/charts/questcode
+
+helm create <nome-chart>
+
+# Ex
+helm create frontend
+```
+
+  frontend/
+  ├── charts
+  ├── Chart.yaml
+  ├── templates
+  │   ├── deployment.yaml
+  │   ├── _helpers.tpl
+  │   ├── hpa.yaml
+  │   ├── ingress.yaml
+  │   ├── NOTES.txt
+  │   ├── serviceaccount.yaml
+  │   ├── service.yaml
+  │   └── tests
+  │       └── test-connection.yaml
+  └── values.yaml
+
+
+
+
+
+
+WIP 
+WIP
+
+
+
+
+
+
+### SUBIR HELM CHARTS QUESTCODE PARA REGISTRY DO CHATMUSEUM NO CLUSTER
 
 #### ADD REPO HELM CHART 
 
 ```bash
 # Adiciona repositorio de charts do Questcode no Helm Host local
 helm repo add questcode http://$(kubectl get nodes --namespace devops -o jsonpath="{.items[0].status.addresses[0].address}"):30010
+
+# Atualizando lista de repositorios
+helm repo update
+
+# Lista repositórios
+helm repo update
+
+  NAME            URL                                 
+  chartmuseum     https://chartmuseum.github.io/charts
+  questcode       http://192.168.0.235:30010          
 
 # Instalar o plug in CMPUSH necessário para o upload dos charts do questcode para o cluster
 helm plugin install https://github.com/chartmuseum/helm-push

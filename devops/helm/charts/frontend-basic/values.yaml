@@ -1,9 +1,0 @@
-image:
-  tag: 0.1.2-staging
-
-replicas: 2
-
-service:
-  port: 80
-  nodePort: 31888
-
