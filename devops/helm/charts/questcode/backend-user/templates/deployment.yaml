@@ -35,16 +35,32 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: questcode
+                  key: NODE_ENV
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: questcode
+                  key: MONGO_URI
+            - name: SECRET_OR_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: questcode
+                  key: SECRET_OR_KEY
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /api/profile/test
+              port: {{ .Values.service.targetPort }}
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /api/profile/test
+              port: {{ .Values.service.targetPort }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
