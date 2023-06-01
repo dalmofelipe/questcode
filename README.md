@@ -8,7 +8,9 @@
 
 
 
-## Instalar Docker
+# DOCKER
+
+## Instalação
 
 ```bash
 sudo apt-get update
@@ -33,7 +35,9 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 sudo usermod -aG docker $USER
 ```
+<br>
 
+# KUBERNETES K8S
 
 ## Remover todas configurações de clusters anteriores
 
@@ -54,7 +58,6 @@ rm -rf /var/lib/etcd  \
 
 iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 ```
-
 
 ## Compilar, instalar e configurar CRI-Dockerd
 
@@ -89,7 +92,6 @@ systemctl enable --now cri-docker.socket
 systemctl status cri-docker.service
 ```
 
-
 ## Configurar rede e desativar swap
 
 ```bash
@@ -107,8 +109,6 @@ echo "br-netfilter" >> /etc/modules-load.d/modules.conf
 
 ## Instalando Kubernetes e iniciando Cluster Local - Bare Metal
 
-### INSTALANDO KUBERNETES
-
 ```bash
 sudo su
 swapon -s
@@ -124,7 +124,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 
-### INICIALIZAR CLUSTER
+## INICIALIZAR CLUSTER
 
 ```bash
 kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///var/run/cri-dockerd.sock
@@ -169,9 +169,9 @@ metadata:
 ```
 
 
-## DOCKER BUILD IMAGES e upload para o registry no DockerHUB
+# DOCKER BUILD IMAGES E DOCKER REGISTRY
 
-**FRONTEND**
+## FRONTEND
 
 ```bash
 docker build -t --name frontend-alpine-staging dalmofelipe/questcode-frontend:0.1.0-staging --build-arg NPM_ENV=staging .
@@ -184,20 +184,22 @@ Caso o container não tenha acesso a internet para baixar as dependências pelo 
 docker build -t --name frontend-alpine-staging dalmofelipe/questcode-frontend:0.1.0-staging --build-arg NPM_ENV=staging --network host .
 ```
 
-**SCM**
+## SCM
 
 ```bash
 docker build -t dalmofelipe/questcode-backend-scm:0.1.0-staging .
 docker push dalmofelipe/questcode-backend-scm:0.1.0-staging 
 ```
 
-**USER**
+## USER
 
 ```bash
 docker build -t dalmofelipe/questcode-backend-user:0.1.0-staging .
 docker push dalmofelipe/questcode-backend-user:0.1.0-staging 
 ```
 
+
+# HELM
 
 ## Instalar Helm no computador local/HOST
 
@@ -293,25 +295,58 @@ helm create frontend
 
 <br>
 
-### frontend/values.yaml
+### Ports K8S no contexto do Helm Charts
 
-```yml
-# ... 
-image:
-  repository: dalmofelipe/questcode-frontend
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.1.0-staging"
-# ... 
-service:
-  type: NodePort
-  port: 80
-  targetPort: 80
-  NodePort: 30080
-# ... 
-```
+`port`: port interna do cluster para comunicação entre aplicações
 
-### Instalar um Chart via terminal para teste no K8S
+`targetPort`: Porta do container que a aplicação esta ouvindo. `containerPort` no deployment.yaml do Helm Chart
+
+`nodePort`: Porta de saida do cluster K8S 
+
+`ClusterIP`: Endereço para comunicação dos serviços internamento no cluster
+
+`NodePort`: Porta externa para acessar os servicos internos do cluster
+
+`LoadBalancer`: Porta externa para acessar os servicos internos do cluster pela nuvem 
+
+<br>
+
+
+### Estrutura do Helm Chart
+
+<br>
+
+**FRONTEND**
+
+`frontend/values.yaml` - lorem  
+
+`frontend/template/service.yaml` - lorem  
+
+`frontend/template/deployment.yaml` - lorem  
+
+<br>
+
+**BACKEND-USER**
+
+`backend-user/values.yaml` - lorem  
+
+`backend-user/template/service.yaml` - lorem  
+
+`backend-user/template/deployment.yaml` - lorem  
+
+<br>
+
+**BACKEND-SCM**
+
+`backend-scm/values.yaml` - lorem  
+
+`backend-scm/template/service.yaml` - lorem  
+
+`backend-scm/template/deployment.yaml` - lorem  
+
+<br>
+
+### Instalar Chart direto da especificação pelo terminal para teste no K8S
 
 ```bash
 # /devops/helm/charts/questcode/frontend
@@ -324,6 +359,8 @@ helm ls -n devops
 # Desinstalar um Chart 
 helm uninstall frontend -n devops
 ```
+<br>
+
 
 
 WIP wip W I P w i p 
@@ -331,9 +368,11 @@ WIP wip W I P w i p
 
 
 
-
+<br>
 
 ## SUBIR HELM CHARTS QUESTCODE PARA REGISTRY DO CHATMUSEUM NO CLUSTER
+
+<br>
 
 ### ADD REPO HELM CHART 
 
@@ -355,6 +394,8 @@ helm repo update
 helm plugin install https://github.com/chartmuseum/helm-push
 ```
 
+<br>
+
 ### UPLOAD HELM CHART QUESTCODE
 
 ```bash
@@ -372,6 +413,8 @@ helm cm-push oci/backend-user-0.1.0.tgz http://localhost:30010
 
 helm repo update
 ```
+
+<br>
 
 ### RUNING AND HELM UPGRADE
 
