@@ -1,23 +1,14 @@
-
-## DevOps BootCamp - QuestCode
+# DevOps BootCamp - QuestCode
 
 ![Bootcamp DevOps](/docs/cover.png "Bootcamp DevOps")
 
 ## RoadMap
 
-1. [Instalar Docker](#instalar-docker)
-2. [Remover todas configurações de clusters anteriores](#remover-todas-configurações-de-clusters-anteriores)
-3. [Compilar, instalar e configurar CRI-Dockerd](#compilar-instalar-e-configurar-cri-dockerd)
-4. [Configurar rede e desativar swap](#configurar-rede-e-desativar-swap)
-5. [Instalando Kubernetes e iniciando Cluster Local - Bare Metal](#instalando-kubernetes-e-iniciando-cluster-local---bare-metal)
-6. [CONTROL-PLANE ISOLATION](#control-plane-isolation)
-7. [Aplicar yaml de namespaces](#aplicar-yaml-de-namespaces)
-8. [Instalar Helm no Host](#instalar-helm-no-host)
-9. [Subir o Chartmuseum via HelmChart no cluster](#subir-o-chartmuseum-via-helmchart-no-cluster)
-10. [Subir Helm Charts QuestCode para registry do Chatmuseum no cluster](#subir-helm-charts-questcode-para-registry-do-chatmuseum-no-cluster)
 
 
-### Instalar Docker
+
+
+## Instalar Docker
 
 ```bash
 sudo apt-get update
@@ -44,7 +35,7 @@ sudo usermod -aG docker $USER
 ```
 
 
-### Remover todas configurações de clusters anteriores
+## Remover todas configurações de clusters anteriores
 
 ```bash
 systemctl stop cri-docker.service cri-docker.socket kubelet.service
@@ -65,7 +56,7 @@ iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 ```
 
 
-### Compilar, instalar e configurar CRI-Dockerd
+## Compilar, instalar e configurar CRI-Dockerd
 
 ```bash
 sudo su 
@@ -99,7 +90,7 @@ systemctl status cri-docker.service
 ```
 
 
-### Configurar rede e desativar swap
+## Configurar rede e desativar swap
 
 ```bash
 sudo su
@@ -114,9 +105,9 @@ echo "br-netfilter" >> /etc/modules-load.d/modules.conf
 ```
 
 
-### Instalando Kubernetes e iniciando Cluster Local - Bare Metal
+## Instalando Kubernetes e iniciando Cluster Local - Bare Metal
 
-#### INSTALANDO KUBERNETES
+### INSTALANDO KUBERNETES
 
 ```bash
 sudo su
@@ -133,7 +124,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 
-#### INICIALIZAR CLUSTER
+### INICIALIZAR CLUSTER
 
 ```bash
 kubeadm init --pod-network-cidr=10.244.0.0/16 --cri-socket=unix:///var/run/cri-dockerd.sock
@@ -146,7 +137,7 @@ kubeadm join 192.168.0.231:6443 --token 7yow72.n9696or3dijmumj5 --discovery-toke
 ```
 
 
-### CONTROL-PLANE ISOLATION
+## CONTROL-PLANE ISOLATION
 
 Permite que o master/control-plane rode como um node!
 
@@ -156,7 +147,7 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```
 
 
-### Aplicar yaml de namespaces
+## Aplicar yaml de namespaces
 
 ```yaml
 ---
@@ -178,7 +169,7 @@ metadata:
 ```
 
 
-### DOCKER BUILD IMAGES e upload para o registry no DockerHUB
+## DOCKER BUILD IMAGES e upload para o registry no DockerHUB
 
 **FRONTEND**
 
@@ -208,7 +199,7 @@ docker push dalmofelipe/questcode-backend-user:0.1.0-staging
 ```
 
 
-### Instalar Helm no computador local/HOST
+## Instalar Helm no computador local/HOST
 
 ```bash
 # helm install , caso já tenha o Helm instalado ele será atualizado
@@ -223,7 +214,7 @@ helm repo add chartmuseum https://chartmuseum.github.io/charts
 ```
 
 
-### Subir o Chartmuseum via HelmChart no cluster
+## Subir o Chartmuseum via HelmChart no cluster
 
 ```bash
 # Aplicar HelmChart do Chartmuseum no Cluster
@@ -269,7 +260,7 @@ Feito, Chartmuseum hospedado no Cluster!
 
 
 
-### CRIANDO HELM CHARTS - TRANSFORMANDO IMAGENS DOCKER EM CHARTS 
+## CRIANDO HELM CHARTS - TRANSFORMANDO IMAGENS DOCKER EM CHARTS 
 
 Comando gera um template completo de Helm Chart.
 
@@ -283,6 +274,7 @@ helm create <nome-chart>
 helm create frontend
 ```
 
+```
   frontend/
   ├── charts
   ├── Chart.yaml
@@ -297,23 +289,53 @@ helm create frontend
   │   └── tests
   │       └── test-connection.yaml
   └── values.yaml
+```
+
+<br>
+
+### frontend/values.yaml
+
+```yml
+# ... 
+image:
+  repository: dalmofelipe/questcode-frontend
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "0.1.0-staging"
+# ... 
+service:
+  type: NodePort
+  port: 80
+  targetPort: 80
+  NodePort: 30080
+# ... 
+```
+
+### Instalar um Chart via terminal para teste no K8S
+
+```bash
+# /devops/helm/charts/questcode/frontend
+helm install frontend -n devops . # ponto no final
+
+# listar Charts instalados pelo Helm
+helm ls
+helm ls -n devops
+
+# Desinstalar um Chart 
+helm uninstall frontend -n devops
+```
+
+
+WIP wip W I P w i p 
 
 
 
 
 
 
-WIP 
-WIP
+## SUBIR HELM CHARTS QUESTCODE PARA REGISTRY DO CHATMUSEUM NO CLUSTER
 
-
-
-
-
-
-### SUBIR HELM CHARTS QUESTCODE PARA REGISTRY DO CHATMUSEUM NO CLUSTER
-
-#### ADD REPO HELM CHART 
+### ADD REPO HELM CHART 
 
 ```bash
 # Adiciona repositorio de charts do Questcode no Helm Host local
@@ -333,7 +355,7 @@ helm repo update
 helm plugin install https://github.com/chartmuseum/helm-push
 ```
 
-#### UPLOAD HELM CHART QUESTCODE
+### UPLOAD HELM CHART QUESTCODE
 
 ```bash
 helm lint charts/frontend/
@@ -351,7 +373,7 @@ helm cm-push oci/backend-user-0.1.0.tgz http://localhost:30010
 helm repo update
 ```
 
-#### RUNING AND HELM UPGRADE
+### RUNING AND HELM UPGRADE
 
 Upgrade simulando nova versão do ```backend-scm```
 
