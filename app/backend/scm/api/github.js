@@ -4,7 +4,7 @@ const axios = require("axios");
 
 const keys = require("../config/keys");
 
-// @route   GET api/profile/test
+// @route   GET api/scm/test
 // @desc    Test Posts Route
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Github Works" }));

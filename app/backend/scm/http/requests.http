@@ -1,2 +1,6 @@
 ###
 GET http://localhost:3030/api/scm/health HTTP/1.1
+
+
+###
+GET http://localhost:3030/api/scm/github/test HTTP/1.1
