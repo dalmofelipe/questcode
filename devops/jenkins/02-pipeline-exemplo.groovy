@@ -39,8 +39,10 @@ podTemplate(
 {
     // este node será executado no podTemplate 'questcode'
     node('questcode') { 
-        stage('Build') {
+        stage('Checkout') {
             echo 'Clone do repositório do código no Github'
+            sh 'pwd'
+            checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/dalmofelipe/questcode.git']])
             sh 'ls -ltra'
         }
         stage('Package') {
@@ -48,11 +50,17 @@ podTemplate(
                 echo 'comunicando docker k8s com docker do host'
                 echo 'listando imagens do host'
                 sh 'docker images'
-                sh 'ls -ltra'
+
+                // sh 'cd app/frontend' // não mudou diretório
+                dir('app/frontend') { // OK Success
+                    sh 'pwd'
+                    sh 'ls -ltra'
+                }
             }
         }
         stage('Deploy') {
             echo 'Iniciando deploy com Helm'
+            sh 'pwd' // volta a raiz do repositorio
             sh 'ls -ltra'
         }
     }
