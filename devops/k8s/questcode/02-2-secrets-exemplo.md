@@ -41,3 +41,6 @@ echo "byBoZXhhIHNlcmEgbm9zc28=" | base64 --decode
 
 ```
 
+### MONGO_URI 
+
+mongodb+srv://<username>:<password>@devops.etlqfoz.mongodb.net/<dbname>?retryWrites=true&w=majority

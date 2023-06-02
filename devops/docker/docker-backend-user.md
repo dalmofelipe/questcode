@@ -20,5 +20,9 @@ docker run -d --name user-alpine -p 3020:3020 -e NODE_ENV=staging -e SECRET_OR_K
 ```
 
 NODE_ENV = namespace
+
 SECRET_OR_KEY = secret compartilhado pelos servicos
-MONGO_URI=mongodb+srv://<username>:<password>@devops.etlqfoz.mongodb.net/?retryWrites=true&w=majority
+
+MONGO_URI 
+
+mongodb+srv://<username>:<password>@devops.etlqfoz.mongodb.net/<dbname>?retryWrites=true&w=majority

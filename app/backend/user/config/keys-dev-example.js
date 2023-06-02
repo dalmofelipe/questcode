@@ -1,4 +1,5 @@
 module.exports = {
-    mongoURI: "<MONGO_DB_URI>",
+    // substitua os campos username, password e dbname na URI do MongoDB
+    mongoURI: "mongodb+srv://<username>:<password>@devops.etlqfoz.mongodb.net/<dbname>?retryWrites=true&w=majority",
     secretOrKey: "<CHAVE-ALEATORIA>"
 };

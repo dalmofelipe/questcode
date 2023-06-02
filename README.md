@@ -384,11 +384,11 @@ helm repo add questcode http://$(kubectl get nodes --namespace devops -o jsonpat
 helm repo update
 
 # Lista repositórios
-helm repo update
+helm repo list
 
   NAME            URL                                 
   chartmuseum     https://chartmuseum.github.io/charts
-  questcode       http://192.168.0.235:30010          
+  questcode       http://<IP-DO-HOST>:30010          
 
 # Instalar o plug in CMPUSH necessário para o upload dos charts do questcode para o cluster
 helm plugin install https://github.com/chartmuseum/helm-push
@@ -399,17 +399,14 @@ helm plugin install https://github.com/chartmuseum/helm-push
 ### UPLOAD HELM CHART QUESTCODE
 
 ```bash
-helm lint charts/frontend/
-helm package charts/frontend/ -d oci/
-helm cm-push oci/frontend-0.1.0.tgz http://localhost:30010
+helm lint devops/helm/charts/questcode/frontend/
+helm cm-push devops/helm/charts/questcode/frontend/ questcode
 
-helm lint charts/backend-scm/
-helm package charts/backend-scm/ -d oci/
-helm cm-push oci/backend-scm-0.1.0.tgz http://localhost:30010
+helm lint devops/helm/charts/questcode/backend-user/
+helm cm-push devops/helm/charts/questcode/backend-user/ questcode
 
-helm lint charts/backend-user/
-helm package charts/backend-user/ -d oci/
-helm cm-push oci/backend-user-0.1.0.tgz http://localhost:30010
+helm lint devops/helm/charts/questcode/backend-scm/
+helm cm-push devops/helm/charts/questcode/backend-scm/ questcode
 
 helm repo update
 ```
