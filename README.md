@@ -201,7 +201,15 @@ docker push dalmofelipe/questcode-backend-user:0.1.0-staging
 
 # HELM
 
-## Instalar Helm no computador local/HOST
+```helm``` - CLI instalada na maquina local que hospeda o cluster k8s
+
+```helm chart``` - Conjunto de especificações yaml para criar um chart de uma aplicação
+
+```chartmuseum``` - Servidor de charts instalado no cluster k8s
+
+<br>
+
+## INSTALAÇÃO LOCAL/HOST
 
 ```bash
 # helm install , caso já tenha o Helm instalado ele será atualizado
@@ -216,7 +224,7 @@ helm repo add chartmuseum https://chartmuseum.github.io/charts
 ```
 
 
-## Subir o Chartmuseum via HelmChart no cluster
+## INSTALAR/CONFIGURAR CHARTMUSEUM VIA HELM NO CLUSTER K8S
 
 ```bash
 # Aplicar HelmChart do Chartmuseum no Cluster
@@ -359,14 +367,6 @@ helm ls -n devops
 # Desinstalar um Chart 
 helm uninstall frontend -n devops
 ```
-<br>
-
-
-
-WIP wip W I P w i p 
-
-
-
 
 <br>
 
@@ -496,7 +496,7 @@ kubectl apply -f 01-pc-pvc.yaml
 
 <br>
 
-### CRIAR DITORIO DO VOLUME NO SERVIDOR LOCAL/HOST DO CLUTER K8S
+### CRIAR DIRETORIO PARA VOLUME NO SERVIDOR LOCAL/HOST DO CLUTER K8S
 
 ```bash
 sudo mkdir /mnt/data-jenkins
@@ -610,10 +610,47 @@ kubectl create rolebinding sa-devops-role-clusteradmin --clusterrole=cluster-adm
 kubectl create rolebinding sa-devops-role-clusteradmin-kubesystem --clusterrole=cluster-admin --serviceaccount=devops:default --namespace=kube-system
 ```
 
-
 <br>
 
 ### DOCUMENTAÇÃO OFICIAL DO JENKINS PARA INSTALAÇÃO NO K8S
 
 - https://www.jenkins.io/doc/book/installing/kubernetes/
 
+<br>
+
+## CADASTRANDO CREDENCIAIS DE SERVICOS NO JENKINS
+
+Criar credenciais na sessão 
+
+```Gerenciar Jenkins > Credentials > System > Global credentials```
+
+- **DOCKER HUB** > username e senha
+
+- **GITHUB** > ssh
+
+```bash
+# Gerar chaves ssh para o github
+ssh-keygen -t ed25519 -C "nome.sobrenome@email.com"
+
+# cole a chave privada na credential Jenkins
+cat id_jenkins 
+
+# add chave publica no github > settigns > SSH and GPG Keys > SSH keys > new SSH Key
+cat id_jenkins.pub
+```
+
+### POD TEMPLATE 
+
+podTemplate
+cloud : Kubernetes
+namespace of the template : devops
+label : questcode
+
+  containers > conteiners template
+  name : docker-container 
+  docker image: docker
+
+  // necessário para que o docker do k8s comunique com docker do host- docker in docker 
+  volumes > host path volume 
+  host path : /var/run/docker.sock
+  mount path : /var/run/docker.sock
