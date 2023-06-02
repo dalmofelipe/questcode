@@ -1,0 +1,33 @@
+# kubectl-abbreviations
+
+    certificates = cert, certs
+    certificatesigningrequests = csr
+    certificiaterequests = cr, crs
+    componentstatuses = cs
+    configmaps = cm
+    cronjobs = cj
+    customresourcedefinitions = crd, crds
+    daemonsets = ds
+    deployments = deploy
+    endpoints = ep
+    events = ev
+    horizontalpodautoscalers = hpa
+    ingresses = ing
+    limitranges = limits
+    namespaces = ns
+    networkpolicies = netpol
+    nodes = no
+    persistentvolumeclaims = pvc
+    persistentvolumes = pv
+    pods = po
+    podsecuritypolicies = psp
+    priorityclasses = pc
+    replicasets = rs
+    replicasets = rs
+    replicationcontrollers = rc
+    resourcequotas = quota
+    scheduledscalers = ss
+    serviceaccounts = sa
+    services = svc
+    statefulsets = sts
+    storageclasses = sc
